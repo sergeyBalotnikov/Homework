@@ -1,6 +1,4 @@
 package ru.mail.sergey_balotnikov.homework2_2.task1;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,38 +6,20 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
-import java.util.List;
-
 import ru.mail.sergey_balotnikov.homework2_2.R;
 
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ContactsViewHolder> implements Filterable {
 
     private ArrayList<Contact> contactList;
     private ArrayList<Contact> contactListFiltered;
-//    private ContactsAdapterListener listener;
-
-
-/*    public ContactsAdapter(ArrayList<Contact> contactList, ArrayList<Contact> contactListFiltered, ContactsAdapterListener listener) {
-        this.contactList = contactList;
-        this.contactListFiltered = contactListFiltered;
-        this.listener = listener;
-    }*/
 
     public ContactsAdapter(ArrayList<Contact> contactList) {
         super();
         this.contactList = contactList;
     }
-/*
-    public ContactsAdapter() {
-        super();
-    }
-*/
-
 
     @NonNull
     @Override
@@ -79,13 +59,6 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
             contactName = itemView.findViewById(R.id.tv_contact_name);
             contactNumberOrEmail = itemView.findViewById(R.id.tv_contact_email_or_number);
             icon = itemView.findViewById(R.id.iv_icon);
-/*            itemView.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View view) {
-                    // send selected contact in callback
-                    listener.onContactSelected(contactListFiltered.get(getAdapterPosition()));
-                }
-            });*/
         }
     }
 
@@ -119,11 +92,5 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
             notifyDataSetChanged();
         }
     };
-
     }
-/*
-    public interface ContactsAdapterListener {
-        void onContactSelected(Contact contact);
-    }
-*/
 }

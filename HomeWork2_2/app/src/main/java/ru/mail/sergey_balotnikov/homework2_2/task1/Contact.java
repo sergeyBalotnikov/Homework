@@ -32,9 +32,6 @@ public class Contact {
         contacts.add(contact);
     }
 
-    public Contact() {
-    }
-
     public Contact(String name, String eMailOrNumber, boolean isNumber) {
 
         this.name = name;
@@ -53,21 +50,5 @@ public class Contact {
     public String geteMailOrNumber() {
         return eMailOrNumber;
     }
-
-/*
-    public void setNumber(boolean number) {
-        isNumber = number;
-    }
-*/
-    /*
-        public void seteMailOrNumber(String eMailOrNumber) {
-            this.eMailOrNumber = eMailOrNumber;
-        }
-    */
-    /*
-        public void setName(String name) {
-            this.name = name;
-        }
-    */
 }
 

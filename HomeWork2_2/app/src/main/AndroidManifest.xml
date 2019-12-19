@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".task1.ContactTask"/>
-        <activity android:name=".task1.AddContact"/>
+        <activity android:name=".task1.AddContactActivity"/>
         <activity android:name=".task2.CustomViewTask"/>
     </application>
 

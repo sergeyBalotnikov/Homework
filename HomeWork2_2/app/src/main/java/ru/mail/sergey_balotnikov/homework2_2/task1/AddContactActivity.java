@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import ru.mail.sergey_balotnikov.homework2_2.R;
 
-public class AddContact extends AppCompatActivity {
+public class AddContactActivity extends AppCompatActivity {
 
     private RadioGroup radioGroup;
     private EditText name;

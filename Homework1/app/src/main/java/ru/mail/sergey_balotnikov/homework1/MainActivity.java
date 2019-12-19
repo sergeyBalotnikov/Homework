@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.widget.LinearLayout;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(Configuration configuration){
         super.onConfigurationChanged(configuration);
+
         orientation = configuration.orientation;
         setBackgroundImage(configuration.orientation);
         if(configuration.screenHeightDp==480){
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         } else if(configuration.screenWidthDp==480){
             screenSize = configuration.screenWidthDp;
         }
-
+        Intent intent = getIntent();
     }
 
 }
