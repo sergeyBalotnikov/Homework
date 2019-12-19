@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Homework_2</string>
+    <string name="contactName">Name</string>
+    <string name="contactNumberOrMail">number/email</string>
+    <string name="phoneNumber">Phone number</string>
+    <string name="email">Email</string>
+    <string name="name">Name</string>
+    <string name="add_contact">Add contact</string>
+    <string name="task1">1-st task</string>
+    <string name="task2">2-snd task</string>
+    <string name="task3">3-snd task</string>
+    <string name="no_contacts_please_add">No Contacts. Please add</string>
+    <string name="use_toast">use toast</string>
+    <string name="use_snack_bar">use Snackbar</string>
+    <string name="task_2_title">Custom View</string>
+    <string name="task_2_btn">Open Custom View</string>
+    <string name="task_3_btn">Open Web View</string>
+    <string name="task_1_btn">Open PhoneBook</string>
+
+</resources>
