@@ -2,11 +2,10 @@ package ru.mail.sergey_balotnikov.homework1;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.textclassifier.TextClassifierEvent;
 import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,12 +31,11 @@ public class MainActivity extends AppCompatActivity {
     private void setBackgroundImage(final int orientation)
     {
         LinearLayout layout;
-        layout = findViewById(R.id.l_flag);
-
+        layout = findViewById(R.id.activity_main);
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            layout.setBackgroundResource(R.drawable.flag_landscape);
+            layout.setBackgroundResource(R.drawable.flag);
         } else if (orientation == Configuration.ORIENTATION_PORTRAIT){
-            layout.setBackgroundResource(R.drawable.flag_portrait);
+            layout.setBackgroundResource(R.drawable.flag);
         } else if (screenSize!=0){
             layout.setBackgroundResource(R.color.colorWhite);
         }
@@ -45,15 +43,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(Configuration configuration){
         super.onConfigurationChanged(configuration);
-
         orientation = configuration.orientation;
-        setBackgroundImage(configuration.orientation);
-        if(configuration.screenHeightDp==480){
+        if(configuration.screenHeightDp==640){
             screenSize = configuration.screenHeightDp;
-        } else if(configuration.screenWidthDp==480){
-            screenSize = configuration.screenWidthDp;
         }
-        Intent intent = getIntent();
+        setBackgroundImage(configuration.orientation);
     }
 
 }

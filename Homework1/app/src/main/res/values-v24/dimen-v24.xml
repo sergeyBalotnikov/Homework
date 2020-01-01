@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="title_text_size">56sp</dimen>
-    <dimen name="normal_text_size">32sp</dimen>
-    <dimen name="standard_margin">20dp</dimen>
-    <dimen name="title_margin">28dp</dimen>
-    <dimen name="small_margin">12dp</dimen>
-</resources>
