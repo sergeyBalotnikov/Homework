@@ -5,12 +5,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-/*import java.util.ArrayList;*/
-
 import ru.mail.sergey_balotnikov.homework2_2.R;
 
 public class AddContactActivity extends AppCompatActivity {
@@ -29,6 +25,7 @@ public class AddContactActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         emailOrNumber = findViewById(R.id.et_email);
+        name = findViewById(R.id.et_name);
         radioGroup = findViewById(R.id.rg_mail_or_number);
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -40,8 +37,6 @@ public class AddContactActivity extends AppCompatActivity {
                     emailOrNumber.setHint(R.string.email);
                 }
         });
-        name = findViewById(R.id.et_name);
-
         check = findViewById(R.id.ib_check);
         check.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,10 +45,6 @@ public class AddContactActivity extends AppCompatActivity {
                         , emailOrNumber.getText().toString(),
                         radioGroup.getCheckedRadioButtonId()==R.id.rb_number?true:false);
                 Contact.addContact(contact);
-/*
-                ArrayList<Contact> contactsList = Contact.getContactsList();
-                ObserverContactList.getInstance().notyfiListChanged(contactsList);
-*/
                 finish();
             }
         });

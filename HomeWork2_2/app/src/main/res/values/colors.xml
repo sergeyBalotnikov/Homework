@@ -14,5 +14,6 @@
     <color name="colorBlack">#000000</color>
     <color name="colorChangedRadioBtn">#2C98F0</color>
     <color name="colorCustomViewCenter">#A03A96</color>
+    <color name="buttonRemoveColor">#FE2727</color>
 
 </resources>

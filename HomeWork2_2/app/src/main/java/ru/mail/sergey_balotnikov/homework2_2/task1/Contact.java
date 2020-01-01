@@ -2,20 +2,21 @@ package ru.mail.sergey_balotnikov.homework2_2.task1;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 public class Contact {
     private String name = "Name";
     private String eMailOrNumber = "number or email";
     private boolean isNumber = false;
-    private static ArrayList<Contact> contacts;
+    private static List<Contact> contacts = new ArrayList<>();
 
-    private static final void getInstance(){
+    /*private static final void getInstance(){
         if(contacts==null){
             contacts = new ArrayList<>();
         }
-    }
-    public static ArrayList<Contact> getContactsList(){
-        getInstance();
+    }*/
+    public static List<Contact> getContactsList(){
+        //getInstance();
         contacts.sort(new Comparator<Contact>() {
             @Override
             public int compare(Contact contact, Contact t1) {
@@ -26,9 +27,7 @@ public class Contact {
     }
 
     public static void addContact(Contact contact){
-        if (contacts==null) {
-            contacts = new ArrayList<>();
-        }
+
         contacts.add(contact);
     }
 
@@ -37,6 +36,13 @@ public class Contact {
         this.name = name;
         this.eMailOrNumber = eMailOrNumber;
         this.isNumber = isNumber;
+    }
+    public void editContact(Contact contact, int position){
+        contacts.remove(position);
+        contacts.add(contact);
+    }
+    public void removeContact(int position){
+        contacts.remove(position);
     }
 
     public String getName() {

@@ -18,7 +18,6 @@ import ru.mail.sergey_balotnikov.homework2_2.R;
 
 public class CustomView extends View {
 
-    private ArrayList<Integer> colors = new ArrayList<>();
     private int width;
     private int height;
     private int [] arrayColors;
@@ -53,11 +52,13 @@ public class CustomView extends View {
                 } else {
                     activeColor=arrayColors[1];//4
                 }
+            } else {
+                return true;
             }
             if(touchRadius<=getMeasuredHeight()/6){
-                activeColor=R.color.colorCustomViewCenter;
                 setArrayColors();
                 invalidate();
+                return true;
             }
         int [] XYColor = {(int)touchX, (int)touchY, activeColor};
             callBack.makeToast(XYColor);
@@ -141,7 +142,6 @@ public class CustomView extends View {
         canvas.drawArc(rect,0f, 90f, true, paint);
         paint.setColor(arrayColors[3]);
         canvas.drawArc(rect,90f, 90f, true, paint);
-        rect.set(getMeasuredWidth()/4,getMeasuredWidth()/4,getMeasuredWidth()/2,getMeasuredHeight()/2);
         paint.setColor(getResources().getColor(R.color.colorCustomViewCenter, null));
         canvas.drawCircle(getMeasuredHeight()/2, getMeasuredWidth()/2, getMeasuredHeight()/6, paint);
 
@@ -163,12 +163,6 @@ public class CustomView extends View {
 
     public CustomView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        setArrayColors();
-        init(attrs);
-    }
-
-    public CustomView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
         setArrayColors();
         init(attrs);
     }

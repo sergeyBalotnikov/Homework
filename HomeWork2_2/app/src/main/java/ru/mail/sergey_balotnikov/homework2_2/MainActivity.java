@@ -9,7 +9,7 @@ import android.widget.Button;
 
 import ru.mail.sergey_balotnikov.homework2_2.task1.ContactTask;
 import ru.mail.sergey_balotnikov.homework2_2.task2.CustomViewTask;
-
+import ru.mail.sergey_balotnikov.homework2_2.task3.MyWebView;
 public class MainActivity extends AppCompatActivity {
 
     private Button run_task_1;
@@ -37,6 +37,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, CustomViewTask.class));
             }
         });
+        run_task_3.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                startActivity(new Intent(MainActivity.this, MyWebView.class));
+            }
+        });
+
 
     }
 }

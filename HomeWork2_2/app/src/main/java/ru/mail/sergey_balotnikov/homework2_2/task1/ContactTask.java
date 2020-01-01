@@ -3,9 +3,15 @@ package ru.mail.sergey_balotnikov.homework2_2.task1;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toolbar;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -15,21 +21,19 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import ru.mail.sergey_balotnikov.homework2_2.R;
 
-public class ContactTask extends AppCompatActivity {//implements ListListener {
+public class ContactTask extends AppCompatActivity {
 
-    private ArrayList<Contact> contactList = new ArrayList<>();
     private RecyclerView contactRecyclerList;
-    private SearchView searchContactsView;
     private TextView ifEmptyContactList;
     private FloatingActionButton addContactFloatingButton;
     private int orientation;
     private ContactsAdapter adapter;
+    private SearchView search;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task1);
-
         getSupportActionBar().hide();
 
         addContactFloatingButton = findViewById(R.id.fb_add_contact);
@@ -40,12 +44,25 @@ public class ContactTask extends AppCompatActivity {//implements ListListener {
             }
         });
 
-        searchContactsView = findViewById(R.id.sv_search_field);
+        search = findViewById(R.id.sv_search);
+        search.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                adapter.getFilter().filter(s);
+                return false;
+            }
+        });
+
         ifEmptyContactList = findViewById(R.id.tv_empty_contact_list);
 
-        contactList=Contact.getContactsList();
         contactRecyclerList = findViewById(R.id.rv_contacts);
-        adapter = new ContactsAdapter(contactList);
+        adapter = new ContactsAdapter(this);
         contactRecyclerList.setAdapter(adapter);
     }
 

@@ -16,5 +16,12 @@
     <string name="task_2_btn">Open Custom View</string>
     <string name="task_3_btn">Open Web View</string>
     <string name="task_1_btn">Open PhoneBook</string>
+    <string name="search_contact">search contact</string>
+    <string name="search_hint">Type name…</string>
+    <string name="remove">Remove</string>
+    <string name="edit_contact">Edit contact</string>
+    <string name="home_page">google.com</string>
+    <string name="previous_page">previous page</string>
+    <string name="open_in_browser">open in browser</string>
 
 </resources>

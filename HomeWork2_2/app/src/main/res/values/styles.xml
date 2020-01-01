@@ -18,5 +18,20 @@
         <item name="android:textStyle">bold</item>
 
     </style>
+    <style name="ButtonRemove">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:background">@drawable/remove_btn_shape</item>
+        <item name="android:layout_width">281dp</item>
+        <item name="android:layout_height">58dp</item>
+    </style>
+    <style name="ButtonWeb">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:background">@drawable/web_button_shape</item>
+        <item name="android:layout_width">154dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:elevation">5dp</item>
+    </style>
 
 </resources>
