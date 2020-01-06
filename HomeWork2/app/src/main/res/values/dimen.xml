@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dimenSoSmallMargin">16dp</dimen>
+    <dimen name="dimenSmallMargin">18dp</dimen>
+    <dimen name="dimenMediumMargin">20dp</dimen>
+    <dimen name="dimenLargeMargin">26dp</dimen>
+    <dimen name="titleTextSize">14sp</dimen>
+    <dimen name="annotationTextSize">10sp</dimen>
+
+</resources>
