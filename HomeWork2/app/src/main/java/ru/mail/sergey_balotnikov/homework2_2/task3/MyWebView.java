@@ -1,5 +1,8 @@
 package ru.mail.sergey_balotnikov.homework2_2.task3;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,6 +25,7 @@ public class MyWebView extends AppCompatActivity{
     private Button previous;
     private Button openInBrowser;
     private WebView webPage;
+    private Dialog dialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,8 +58,25 @@ public class MyWebView extends AppCompatActivity{
         openInBrowser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String page = webPage.getUrl();
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(page)));
+                dialog = new AlertDialog.Builder(MyWebView.this)
+                        .setTitle("ALARMa!")
+                        .setMessage("Вы уверены что хотите открыть страницу в стороннем браузере?")
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialog.cancel();
+                            }
+                        })
+                        .setPositiveButton("да", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                String page = webPage.getUrl();
+                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(page)));
+                            }
+                        }).create();
+                dialog.show();
+                /*String page = webPage.getUrl();
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(page)));*/
             }
         });
 

@@ -19,7 +19,6 @@ class MyWebViewClient extends WebViewClient {
     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
         view.loadUrl(request.getUrl().toString());
         uriChanged.setChangedAddress(view.getUrl());
-        //Toast.makeText(view.getContext(), "opopo", Toast.LENGTH_LONG).show();
         return true;
     }
 
