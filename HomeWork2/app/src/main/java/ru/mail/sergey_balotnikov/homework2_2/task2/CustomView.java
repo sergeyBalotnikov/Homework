@@ -12,6 +12,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import ru.mail.sergey_balotnikov.homework2_2.MainActivity;
 import ru.mail.sergey_balotnikov.homework2_2.R;
@@ -27,6 +28,8 @@ public class CustomView extends View {
     private float centerY;
     private int activeColor;
     private CustomCallBack callBack = null;
+    private String [] arrayColorsName;
+    private String activeColorName;
 
     public void setCallBack(CustomCallBack callBack) {
         this.callBack = callBack;
@@ -43,14 +46,18 @@ public class CustomView extends View {
             if(touchRadius<=getMeasuredHeight()/2){
                 if(centerY<event.getY()){
                     if(centerX>event.getX()){
-                        activeColor=arrayColors[3];//1
+                        activeColor=arrayColors[3];
+                        activeColorName=arrayColorsName[3];
                     } else {
-                        activeColor=arrayColors[2];//2
+                        activeColor=arrayColors[2];
+                        activeColorName=arrayColorsName[2];
                     }
                 } else if(centerX>event.getX()){
-                    activeColor=arrayColors[0];//3
+                    activeColor=arrayColors[0];
+                    activeColorName=arrayColorsName[0];
                 } else {
-                    activeColor=arrayColors[1];//4
+                    activeColor=arrayColors[1];
+                    activeColorName=arrayColorsName[1];
                 }
             } else {
                 return true;
@@ -62,22 +69,23 @@ public class CustomView extends View {
             }
         int [] XYColor = {(int)touchX, (int)touchY, activeColor};
             callBack.makeToast(XYColor);
+            callBack.writeFile(XYColor, activeColorName);
         }
 
         return true;
     }
 
     protected void setArrayColors(){
-        arrayColors = new int[4];
-        arrayColors[0] = Color.GREEN;
-        arrayColors[1] = Color.RED;
-        arrayColors[2] = Color.BLUE;
-        arrayColors[3] = Color.YELLOW;
+        arrayColors = new int[]{Color.GREEN, Color.RED, Color.BLUE, Color.YELLOW};
+        arrayColorsName = new String[]{"Green", "Red", "Blue", "Yellow"};
         for(int i = 0; i<arrayColors.length; i++){
             int tempCopy = arrayColors[i];
+            String tempName = arrayColorsName[i];
             int changeOn = (int)Math.round(Math.random()*3);
             arrayColors[i]=arrayColors[changeOn];
+            arrayColorsName[i]=arrayColorsName[changeOn];
             arrayColors[changeOn]=tempCopy;
+            arrayColorsName[changeOn]=tempName;
         }
 
     }

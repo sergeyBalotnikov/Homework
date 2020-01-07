@@ -1,6 +1,7 @@
 package ru.mail.sergey_balotnikov.homework2_2.task2;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -10,12 +11,23 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 import ru.mail.sergey_balotnikov.homework2_2.R;
 
 public class CustomViewTask extends AppCompatActivity{
 
     private CustomView myCustomView;
     private Switch useToastOrSnack;
+    public static final String FILE_NAME = "LogFile";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +59,24 @@ public class CustomViewTask extends AppCompatActivity{
                     TextView textView = snackbarView.findViewById(R.id.snackbar_text);
                     textView.setTextColor(XYColor[2]);
                     snackbar.show();
+                }
+            }
+            @Override
+            public void writeFile(int [] XYColor, String color){
+                try {
+                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(
+                            openFileOutput(FILE_NAME, MODE_APPEND)));
+                    Locale locale = new Locale.Builder().setLanguage("ru").setScript("Cyrl").build();
+                    String day = new SimpleDateFormat("dd.MM.yyyy", locale)
+                            .format(Calendar.getInstance().getTime())+"\n"
+                            +new SimpleDateFormat("hh:mm:ss", locale)
+                            .format(Calendar.getInstance().getTime())+"\n";
+                    String coordsTab = "Coordinates:[x:"+XYColor[0]+", y:"+XYColor[1]+"]"+"color:"+color+"\n\n";
+                    bufferedWriter.write(day+coordsTab);
+                    bufferedWriter.close();
+                    Log.d("=====!=====", "Файл записан");
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         });
