@@ -1,5 +1,6 @@
 package ru.mail.sergey_balotnikov.culcapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -12,6 +13,9 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private TextView firstArgument;
+    private static final String FIRST_ARGUMENT = "firstArgument";
+    private static final String SECOND_ARGUMENT = "secondArgument";
+    private static final String OPERAND = "operand";
     private TextView secondArgument;
     private TextView operand;
     private CalculatorClass calculator;
@@ -65,6 +69,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         expression=findViewById(R.id.layoutExpression);
         expression.setOnClickListener(this);
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString(FIRST_ARGUMENT, firstArgument.getText().toString());
+        outState.putString(SECOND_ARGUMENT, secondArgument.getText().toString());
+        outState.putString(OPERAND, operand.getText().toString());
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        firstArgument.setText(savedInstanceState.getString(FIRST_ARGUMENT));
+        secondArgument.setText(savedInstanceState.getString(SECOND_ARGUMENT));
+        operand.setText(savedInstanceState.getString(OPERAND));
+        calculator.getMathematicalExpression().setOperand(savedInstanceState.getString(OPERAND));
+        if(!savedInstanceState.getString(FIRST_ARGUMENT).equals("")){
+            calculator.getMathematicalExpression().setFirstArgument(
+                    Double.parseDouble(savedInstanceState.getString(FIRST_ARGUMENT)));
+        } else {
+            calculator.getMathematicalExpression().setFirstArgument(0);
+        }
+        if(!savedInstanceState.getString(SECOND_ARGUMENT).equals("")){
+            calculator.getMathematicalExpression().setSecondArgument(
+                    Double.parseDouble(savedInstanceState.getString(SECOND_ARGUMENT)));
+        } else {
+            calculator.getMathematicalExpression().setSecondArgument(0);
+        }
     }
 
     @Override
@@ -201,6 +234,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 this.operand.setText("");
                 this.secondArgument.setText("");
                 calculator.dropResult();
+                calculator.getMathematicalExpression().setFirstArgument(
+                        Double.parseDouble(this.firstArgument.getText().toString()));
+
             }
         }else {
                 calculator.getMathematicalExpression().setOperand(s);

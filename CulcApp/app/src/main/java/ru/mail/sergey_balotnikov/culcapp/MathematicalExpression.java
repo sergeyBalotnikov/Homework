@@ -24,7 +24,7 @@ public class MathematicalExpression {
                 result=firstArgument*secondArgument;
                 break;
             case "/":
-                result=firstArgument==0?0:firstArgument/secondArgument;
+                result=secondArgument==0?0:firstArgument/secondArgument;
                 break;
         }
         return String.valueOf(result);
@@ -43,11 +43,11 @@ public class MathematicalExpression {
     }
 
     public void setFirstArgument(double firstArgument) {
-        this.firstArgument = firstArgument;
+            this.firstArgument = firstArgument;
     }
 
     public void setSecondArgument(double secondArgument) {
-        this.secondArgument = secondArgument;
+            this.secondArgument = secondArgument;
     }
 
     public void setOperand(String operand) {
