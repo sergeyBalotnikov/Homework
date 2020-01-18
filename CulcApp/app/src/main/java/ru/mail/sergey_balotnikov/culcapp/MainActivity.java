@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String FIRST_ARGUMENT = "firstArgument";
     private static final String SECOND_ARGUMENT = "secondArgument";
     private static final String OPERAND = "operand";
+    private static final String RESULT= "result";
     private TextView secondArgument;
     private TextView operand;
     private CalculatorClass calculator;
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         outState.putString(FIRST_ARGUMENT, firstArgument.getText().toString());
         outState.putString(SECOND_ARGUMENT, secondArgument.getText().toString());
         outState.putString(OPERAND, operand.getText().toString());
+        outState.putString(RESULT, result);
         super.onSaveInstanceState(outState);
     }
 
@@ -86,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         secondArgument.setText(savedInstanceState.getString(SECOND_ARGUMENT));
         operand.setText(savedInstanceState.getString(OPERAND));
         calculator.getMathematicalExpression().setOperand(savedInstanceState.getString(OPERAND));
+        result=savedInstanceState.getString(RESULT);
         if(!savedInstanceState.getString(FIRST_ARGUMENT).equals("")){
             calculator.getMathematicalExpression().setFirstArgument(
                     Double.parseDouble(savedInstanceState.getString(FIRST_ARGUMENT)));
