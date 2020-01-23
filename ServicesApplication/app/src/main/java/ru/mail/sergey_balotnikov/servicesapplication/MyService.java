@@ -7,7 +7,6 @@ import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -22,7 +21,12 @@ public class MyService extends Service {
     public static final String TAG = "SVB_TAG";
     public static final String FILE_DATE = "dateFile";
     private ExecutorService executorService;
-    private static String logFileString;
+    private final IBinder mBinder = new MyBinder();
+    private OnDateWriterListener listener;
+
+    public void setListener(OnDateWriterListener listener) {
+        this.listener = listener;
+    }
 
     public void writeFile(String string, int id){
         executorService.execute(new DateWriter(string, id));
@@ -38,31 +42,34 @@ public class MyService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         writeFile(intent.getStringExtra(MyReceiver.ACTION_KEY), startId);
+        if(listener!=null) {
+            listener.onDateWriten();
+        }
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        onStartCommand(intent, 0, 12);
-        MyBinder myBinder = new MyBinder();
-        myBinder.setDateFile(logFileString);
-        return myBinder;
+        return mBinder;
     }
+
+   /* String getDateFile(){
+        StringBuilder builder = new StringBuilder();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(MyService.FILE_DATE));
+            while (reader.readLine()!=null){
+                builder.append(reader.readLine());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return builder.toString();
+    }*/
+
     class MyBinder extends Binder{
-
-        String dateFile;
-
-        MyBinder() {
-            super();
-            dateFile = null;
-        }
-        void setDateFile(String fileDate){
-            this.dateFile =fileDate;
-        }
-
-        public String getDateFile() {
-            return dateFile;
+        MyService getService(){
+            return MyService.this;
         }
     }
     class DateWriter implements Runnable{

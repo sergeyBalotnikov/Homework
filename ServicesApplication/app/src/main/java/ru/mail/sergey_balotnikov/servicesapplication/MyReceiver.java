@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
-class MyReceiver extends BroadcastReceiver {
+public class MyReceiver extends BroadcastReceiver {
 
     public static final String ACTION_KEY = "MyServiceAction";
 
@@ -17,5 +17,6 @@ class MyReceiver extends BroadcastReceiver {
         Toast.makeText(context, ""+intent.getAction(), Toast.LENGTH_LONG).show();
         serviceIntent.putExtra(ACTION_KEY, intent.getAction());
         context.startService(serviceIntent);
+        context.stopService(serviceIntent);
     }
 }
