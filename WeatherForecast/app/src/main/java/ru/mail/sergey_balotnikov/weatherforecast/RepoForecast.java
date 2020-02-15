@@ -1,18 +1,15 @@
 package ru.mail.sergey_balotnikov.weatherforecast;
 
 import android.util.Log;
-
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Supplier;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -45,29 +42,16 @@ public class RepoForecast implements RepositoryForecast {
         final String url = String.format(
                 Consts.GET_WEATHER_BY_CITY_NAME,
                 city,
-                !isCelsius?"metric":"",
+                !isCelsius?"metric":"imperial",
                 BuildConfig.API_KEY);
-        Log.d(LOG_TAG, "RequestURL = "+url);
         Request request = new Request.Builder().url(url).build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                Log.d(LOG_TAG, "Request call onFailure");
-            }
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-
-                try {
-                    List<Forecast> forecasts = new ForecastParser(response.body().string()).getParseWhether();
-                    setForecastList(forecasts);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Log.d(LOG_TAG, "RepoForecast onResponse JSON exception");
-
-                }
-            }
-        });
+        try {
+            Response response = client.newCall(request).execute();
+            List<Forecast> forecasts = new ForecastParser(response.body().string()).getParseWhether();
+            setForecastList(forecasts);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return forecastList;
     }
 
@@ -100,7 +84,6 @@ public class RepoForecast implements RepositoryForecast {
                 city,
                 "",
                 BuildConfig.API_KEY);
-        Log.d(LOG_TAG, "RequestURL = "+url);
         Request request = new Request.Builder().url(url).build();
         client.newCall(request).enqueue(new Callback() {
             @Override
