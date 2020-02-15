@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    android:layout_margin="@dimen/small_margin">
+    <ImageView
+        android:id="@+id/imageWhetherIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_add_black_24dp"
+        tools:tint="@color/colorPrimary"
+        />
+    <TextView
+        android:id="@+id/tvDateTime"
+        tools:text="time"
+        android:textSize="@dimen/regular_text_size"
+        android:gravity="center"
+        android:textColor="@color/colorRegularText"
+        android:layout_width="wrap_content"
+        android:layout_weight="3"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tvTemperature"
+        tools:text="Temp"
+        android:textSize="@dimen/regular_text_size"
+        android:gravity="center"
+        android:textColor="@color/colorRegularText"
+        android:layout_width="wrap_content"
+        android:layout_weight="3"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tvDescription"
+        tools:text="description"
+        android:textSize="@dimen/regular_text_size"
+        android:gravity="end"
+        android:textColor="@color/colorRegularText"
+        android:layout_width="wrap_content"
+        android:layout_weight="7"
+        android:layout_height="wrap_content"
+        />
+
+</LinearLayout>
