@@ -1,10 +1,12 @@
-package ru.mail.sergey_balotnikov.weatherforecast;
+package ru.mail.sergey_balotnikov.weatherforecast.utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
+
+import ru.mail.sergey_balotnikov.weatherforecast.forecast.Forecast;
 
 public class ForecastParser {
 

@@ -63,8 +63,7 @@
         android:id="@+id/weatherDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="@dimen/medium_margin"
+        android:layout_margin="@dimen/medium_margin"
         android:gravity="center"
         android:textSize="@dimen/regular_text_size"
         tools:text="Description"
@@ -72,9 +71,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cityTemperature" />
     <androidx.recyclerview.widget.RecyclerView
+        android:background="#000"
         android:id="@+id/recyclerForecastList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_margin"
         app:layout_constraintTop_toBottomOf="@id/weatherDescription"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

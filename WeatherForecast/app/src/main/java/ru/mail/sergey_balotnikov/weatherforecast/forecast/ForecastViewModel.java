@@ -1,4 +1,4 @@
-package ru.mail.sergey_balotnikov.weatherforecast;
+package ru.mail.sergey_balotnikov.weatherforecast.forecast;
 
 import android.app.Application;
 import android.util.Log;
@@ -9,6 +9,9 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
+
+import ru.mail.sergey_balotnikov.weatherforecast.repositories.RepoForecast;
+import ru.mail.sergey_balotnikov.weatherforecast.repositories.RepositoryForecast;
 
 public class ForecastViewModel extends AndroidViewModel {
 

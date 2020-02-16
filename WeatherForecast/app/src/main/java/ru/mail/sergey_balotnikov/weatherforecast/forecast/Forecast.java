@@ -1,4 +1,4 @@
-package ru.mail.sergey_balotnikov.weatherforecast;
+package ru.mail.sergey_balotnikov.weatherforecast.forecast;
 
 public class Forecast {
     private String description;

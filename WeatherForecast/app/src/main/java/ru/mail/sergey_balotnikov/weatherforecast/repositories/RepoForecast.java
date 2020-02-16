@@ -1,4 +1,4 @@
-package ru.mail.sergey_balotnikov.weatherforecast;
+package ru.mail.sergey_balotnikov.weatherforecast.repositories;
 
 import android.util.Log;
 import org.jetbrains.annotations.NotNull;
@@ -15,6 +15,10 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import ru.mail.sergey_balotnikov.weatherforecast.BuildConfig;
+import ru.mail.sergey_balotnikov.weatherforecast.forecast.Forecast;
+import ru.mail.sergey_balotnikov.weatherforecast.utils.Consts;
+import ru.mail.sergey_balotnikov.weatherforecast.utils.ForecastParser;
 
 public class RepoForecast implements RepositoryForecast {
 

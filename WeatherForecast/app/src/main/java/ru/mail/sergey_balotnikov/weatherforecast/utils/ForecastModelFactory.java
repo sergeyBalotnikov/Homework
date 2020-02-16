@@ -1,10 +1,12 @@
-package ru.mail.sergey_balotnikov.weatherforecast;
+package ru.mail.sergey_balotnikov.weatherforecast.utils;
 
 import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+
+import ru.mail.sergey_balotnikov.weatherforecast.forecast.ForecastViewModel;
 
 public class ForecastModelFactory extends ViewModelProvider.NewInstanceFactory {
     private Application application;
@@ -16,7 +18,7 @@ public class ForecastModelFactory extends ViewModelProvider.NewInstanceFactory {
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass){
-        if(modelClass==ForecastViewModel.class){
+        if(modelClass== ForecastViewModel.class){
             return (T) new ForecastViewModel(application);
         }
         return null;

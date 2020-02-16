@@ -1,4 +1,4 @@
-package ru.mail.sergey_balotnikov.weatherforecast;
+package ru.mail.sergey_balotnikov.weatherforecast.forecast;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -15,9 +15,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 import java.util.List;
+
+import ru.mail.sergey_balotnikov.weatherforecast.R;
+import ru.mail.sergey_balotnikov.weatherforecast.adapters.ForecastAdapter;
+import ru.mail.sergey_balotnikov.weatherforecast.utils.Consts;
+import ru.mail.sergey_balotnikov.weatherforecast.utils.ForecastModelFactory;
 
 public class FragmentCityForecast extends Fragment {
 
@@ -28,6 +34,7 @@ public class FragmentCityForecast extends Fragment {
         return new FragmentCityForecast();
     }
 
+    private ForecastAdapter adapter;
     private ForecastViewModel viewModel;
     private TextView cityName;
     private TextView cityTemperature;
@@ -50,15 +57,8 @@ public class FragmentCityForecast extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        city = null;
-        isCelsius = true;
-        try {
-            city = savedInstanceState.getString(KEY_CITY);
-            isCelsius = savedInstanceState.getBoolean(KEY_UNITS);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            city="Minsk";
-        }
+        //setRetainInstance(true);
+        onViewStateRestored(savedInstanceState);
         viewModel.setRepositoryData(city, isCelsius);
         viewModel.fetchForecastList();
     }
@@ -87,11 +87,17 @@ public class FragmentCityForecast extends Fragment {
 
     private void showForecast(List<Forecast> forecasts) {
         updateForecast(forecasts.get(0));
+        adapter.setForecastAdapterList(forecasts);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        forecastRecyclerList = view.findViewById(R.id.recyclerForecastList);
+        adapter = new ForecastAdapter();
+        adapter.setForecastAdapterList(viewModel.getForecastListLiveData().getValue());
+        forecastRecyclerList.setAdapter(adapter);
+        forecastRecyclerList.setLayoutManager(new LinearLayoutManager(getContext()));
         cityName = view.findViewById(R.id.cityName);
         cityName.setText(city);
         cityTemperature = view.findViewById(R.id.cityTemperature);
@@ -140,13 +146,20 @@ public class FragmentCityForecast extends Fragment {
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
+
         try {
-            city=savedInstanceState.getString(KEY_CITY);
-            isCelsius=savedInstanceState.getBoolean(KEY_UNITS);
-        } catch (Exception e) {
+            city = savedInstanceState.getString(KEY_CITY);
+        } catch (NullPointerException e) {
             e.printStackTrace();
+            city="Minsk";
         }
+        try {
+            isCelsius = savedInstanceState.getBoolean(KEY_UNITS);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            isCelsius = false;
+        }
+        super.onViewStateRestored(savedInstanceState);
     }
 
     private FragmentCityForecast(){}
