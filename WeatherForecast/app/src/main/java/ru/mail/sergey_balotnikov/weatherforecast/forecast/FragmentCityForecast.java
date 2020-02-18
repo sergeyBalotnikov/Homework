@@ -1,25 +1,23 @@
 package ru.mail.sergey_balotnikov.weatherforecast.forecast;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 import java.util.List;
-
 import ru.mail.sergey_balotnikov.weatherforecast.R;
 import ru.mail.sergey_balotnikov.weatherforecast.adapters.ForecastAdapter;
 import ru.mail.sergey_balotnikov.weatherforecast.utils.Consts;
@@ -28,19 +26,18 @@ import ru.mail.sergey_balotnikov.weatherforecast.utils.ForecastModelFactory;
 public class FragmentCityForecast extends Fragment {
 
     public static final String LOG_TAG = "SVB";
-    public static final String KEY_CITY = "Forecast City Name";
-    public static final String KEY_UNITS = "Forecast City Units";
     public static FragmentCityForecast newInstance(){
         return new FragmentCityForecast();
     }
-
+    private CitiesListListener listListener;
+    private SharedPreferences sharedPreferences;
     private ForecastAdapter adapter;
     private ForecastViewModel viewModel;
     private TextView cityName;
     private TextView cityTemperature;
     private Switch isCelsiusSwitch;
     private TextView cityWeatherDescription;
-    private ImageView imegeIconWeather;
+    private ImageView imageIconWeather;
     private ImageView imageListCities;
     private RecyclerView forecastRecyclerList;
     private String city;
@@ -49,23 +46,28 @@ public class FragmentCityForecast extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        if(context instanceof CitiesListListener){
+            listListener=(CitiesListListener)context;
+        }
         viewModel = new ViewModelProvider(this, new ForecastModelFactory(
                 getActivity().getApplication()))
                 .get(ForecastViewModel.class);
+        sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+        city = sharedPreferences.getString(Consts.KEY_CITY, "Minsk");
+        isCelsius = sharedPreferences.getBoolean(Consts.KEY_UNITS, false);
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setRetainInstance(true);
-        onViewStateRestored(savedInstanceState);
         viewModel.setRepositoryData(city, isCelsius);
         viewModel.fetchForecastList();
     }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_city_forecast, container, false);
     }
 
@@ -73,12 +75,8 @@ public class FragmentCityForecast extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         try {
-            viewModel.getForecastListLiveData().observe(getViewLifecycleOwner(), new Observer<List<Forecast>>() {
-                @Override
-                public void onChanged(List<Forecast> forecasts) {
-                    showForecast(forecasts);
-                }
-            });
+            viewModel.getForecastListLiveData().observe(getViewLifecycleOwner(), forecasts ->
+                    showForecast(forecasts));
         } catch (Exception e) {
             e.printStackTrace();
             Log.d(LOG_TAG, e.getMessage());
@@ -101,19 +99,19 @@ public class FragmentCityForecast extends Fragment {
         cityName = view.findViewById(R.id.cityName);
         cityName.setText(city);
         cityTemperature = view.findViewById(R.id.cityTemperature);
+
         isCelsiusSwitch = view.findViewById(R.id.swIsCelsius);
         isCelsiusSwitch.setChecked(isCelsius);
-        isCelsiusSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                isCelsius=b;
-                viewModel.setRepositoryData(city, isCelsius);
-                viewModel.fetchForecastList();
-            }
+        isCelsiusSwitch.setOnCheckedChangeListener((compoundButton, b) -> {
+            isCelsius=b;
+            viewModel.setRepositoryData(city, isCelsius);
+            viewModel.fetchForecastList();
         });
+
         cityWeatherDescription = view.findViewById(R.id.weatherDescription);
-        imegeIconWeather = view.findViewById(R.id.imageIconWeather);
+        imageIconWeather = view.findViewById(R.id.imageIconWeather);
         imageListCities = view.findViewById(R.id.imageCitiesList);
+        imageListCities.setOnClickListener(view1 -> openCitiesList());
         forecastRecyclerList = view.findViewById(R.id.recyclerForecastList);
         try {
             showForecast(viewModel.getForecastListLiveData().getValue());
@@ -122,45 +120,35 @@ public class FragmentCityForecast extends Fragment {
         }
     }
 
+    private void openCitiesList() {
+        listListener.onCitiesListClick();
+    }
+
     private void updateForecast(final Forecast forecast){
         if (forecast!=null){
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    cityTemperature.setText(String.valueOf(forecast.getTemperature()));
-                    cityWeatherDescription.setText(forecast.getDescription());
-
-                    String iconUrl = String.format(Consts.GET_ICON, forecast.getIconId());
-                    Picasso.get().load(iconUrl).into(imegeIconWeather);
-                }
+            getActivity().runOnUiThread(() -> {
+                cityTemperature.setText(String.valueOf(forecast.getTemperature()));
+                cityWeatherDescription.setText(forecast.getDescription());
+                String iconUrl = String.format(Consts.GET_ICON, forecast.getIconId());
+                Picasso.get().load(iconUrl).into(imageIconWeather);
             });
         }
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putString(KEY_CITY, city);
-        outState.putBoolean(KEY_UNITS, isCelsius);
+        sharedPreferences.edit().putBoolean(Consts.KEY_UNITS, isCelsius).apply();
+        sharedPreferences.edit().putString(Consts.KEY_CITY, city).apply();
         super.onSaveInstanceState(outState);
     }
 
     @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-
-        try {
-            city = savedInstanceState.getString(KEY_CITY);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            city="Minsk";
-        }
-        try {
-            isCelsius = savedInstanceState.getBoolean(KEY_UNITS);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            isCelsius = false;
-        }
-        super.onViewStateRestored(savedInstanceState);
+    public void onDestroyView() {
+        Bundle bundle = new Bundle();
+        onSaveInstanceState(bundle);
+        super.onDestroyView();
     }
-
-    private FragmentCityForecast(){}
+    public interface CitiesListListener{
+        void onCitiesListClick();
+    }
 }

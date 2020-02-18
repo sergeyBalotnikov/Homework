@@ -5,17 +5,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.squareup.picasso.Picasso;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
-
 import ru.mail.sergey_balotnikov.weatherforecast.R;
 import ru.mail.sergey_balotnikov.weatherforecast.forecast.Forecast;
 import ru.mail.sergey_balotnikov.weatherforecast.utils.Consts;
@@ -43,11 +38,12 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Whethe
             Forecast currentWhether = forecastList.get(position+1);
             holder.description.setText(currentWhether.getDescription());
             holder.temperature.setText(String.valueOf(currentWhether.getTemperature()));
-            String time = new SimpleDateFormat("EE 'в' h a").format(new Date(currentWhether.getTime()*1000));
+            String time = new SimpleDateFormat("EE 'в' h a")
+                    .format(new Date(currentWhether.getTime()*1000));
             holder.time.setText(time);
             holder.getIconById(currentWhether.getIconId());
         } else {
-            holder.description.setText("-city");
+            holder.description.setText("city");
         }
     }
 

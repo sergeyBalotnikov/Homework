@@ -1,12 +1,10 @@
 package ru.mail.sergey_balotnikov.weatherforecast.repositories;
 
 import android.app.Application;
-
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 import ru.mail.sergey_balotnikov.weatherforecast.repositories.database.CitiesDatabase;
 import ru.mail.sergey_balotnikov.weatherforecast.repositories.database.CityDao;
 import ru.mail.sergey_balotnikov.weatherforecast.repositories.database.CityEntity;

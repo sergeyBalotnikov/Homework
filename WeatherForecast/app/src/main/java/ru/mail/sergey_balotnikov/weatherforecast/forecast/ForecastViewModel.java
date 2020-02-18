@@ -1,7 +1,6 @@
 package ru.mail.sergey_balotnikov.weatherforecast.forecast;
 
 import android.app.Application;
-import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -9,7 +8,6 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
-
 import ru.mail.sergey_balotnikov.weatherforecast.repositories.RepoForecast;
 import ru.mail.sergey_balotnikov.weatherforecast.repositories.RepositoryForecast;
 
@@ -29,13 +27,8 @@ public class ForecastViewModel extends AndroidViewModel {
         return forecastListLiveData;
     }
     void fetchForecastList(){
-        repository.getForecastList().thenAcceptAsync(new Consumer<List<Forecast>>() {
-            @Override
-            public void accept(List<Forecast> forecasts) {
-                forecastListLiveData.postValue(forecasts);
-                Log.d(LOG_TAG, "fetchForecastList(), size = "+forecasts.size());
-            }
-        }, Executors.newSingleThreadExecutor());
+        repository.getForecastList().thenAcceptAsync(forecasts ->
+                forecastListLiveData.postValue(forecasts), Executors.newSingleThreadExecutor());
     }
     void setRepositoryData(String city, boolean isCelsius){
         repository.setRepositoryForecastData(city, isCelsius);
