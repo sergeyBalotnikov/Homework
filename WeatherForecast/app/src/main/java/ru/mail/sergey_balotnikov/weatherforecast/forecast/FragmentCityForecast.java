@@ -21,7 +21,7 @@ import java.util.List;
 import ru.mail.sergey_balotnikov.weatherforecast.R;
 import ru.mail.sergey_balotnikov.weatherforecast.adapters.ForecastAdapter;
 import ru.mail.sergey_balotnikov.weatherforecast.utils.Consts;
-import ru.mail.sergey_balotnikov.weatherforecast.utils.ForecastModelFactory;
+import ru.mail.sergey_balotnikov.weatherforecast.utils.ViewModelFactory;
 
 public class FragmentCityForecast extends Fragment {
 
@@ -49,7 +49,7 @@ public class FragmentCityForecast extends Fragment {
         if(context instanceof CitiesListListener){
             listListener=(CitiesListListener)context;
         }
-        viewModel = new ViewModelProvider(this, new ForecastModelFactory(
+        viewModel = new ViewModelProvider(this, new ViewModelFactory(
                 getActivity().getApplication()))
                 .get(ForecastViewModel.class);
         sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);

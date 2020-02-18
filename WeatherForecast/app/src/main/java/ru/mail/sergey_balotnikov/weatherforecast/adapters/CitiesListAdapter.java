@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
@@ -15,12 +16,14 @@ public class CitiesListAdapter extends RecyclerView.Adapter<CitiesListAdapter.Ci
 
     private List<CityEntity> cityList;
     private OnItemClickListener onItemClickListener;
+    private Context parent;
 
     public CitiesListAdapter(List<CityEntity> list, Context parent) {
         cityList=list;
         if(parent instanceof OnItemClickListener){
             onItemClickListener=(OnItemClickListener)parent;
         }
+        this.parent = parent;
     }
 
     @NonNull
@@ -39,6 +42,12 @@ public class CitiesListAdapter extends RecyclerView.Adapter<CitiesListAdapter.Ci
         } else {
             holder.cityItemView.setText("No cities. Please add city");
         }
+        holder.cityItemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(parent, "Работай, бля!", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
@@ -66,7 +75,9 @@ public class CitiesListAdapter extends RecyclerView.Adapter<CitiesListAdapter.Ci
         @Override
         public void onClick(View view) {
             if(onItemClickListener!=null){
-                onItemClickListener.onCityItemClick(cityItemView.getText().toString());
+                Toast.makeText(parent, "Работай, бля!", Toast.LENGTH_LONG).show();
+            } else{
+                Toast.makeText(parent, "Работай, бля!", Toast.LENGTH_LONG).show();
             }
         }
     }

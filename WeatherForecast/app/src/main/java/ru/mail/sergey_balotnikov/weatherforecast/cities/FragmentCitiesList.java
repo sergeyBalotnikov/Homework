@@ -20,35 +20,30 @@ import java.util.concurrent.Executors;
 import ru.mail.sergey_balotnikov.weatherforecast.R;
 import ru.mail.sergey_balotnikov.weatherforecast.adapters.CitiesListAdapter;
 import ru.mail.sergey_balotnikov.weatherforecast.utils.CheckCityValidInput;
-import ru.mail.sergey_balotnikov.weatherforecast.utils.ForecastModelFactory;
+import ru.mail.sergey_balotnikov.weatherforecast.utils.ViewModelFactory;
 
-public class FragmentCitiesList extends Fragment {
+public class FragmentCitiesList extends Fragment implements CitiesListAdapter.OnItemClickListener{
 
 
+    private static final String LOG_TAG = "SVB";
     public static FragmentCitiesList getInstance(){
         return new FragmentCitiesList();
     }
 
-    private static final String LOG_TAG = "SVB";
     private RecyclerView recyclerView;
     private FloatingActionButton fabAddCity;
     private CitiesFragmentViewModel model;
     private CitiesListAdapter adapter;
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        model=new ViewModelProvider(this, new ForecastModelFactory(
+        model=new ViewModelProvider(this, new ViewModelFactory(
                 getActivity().getApplication()))
                 .get(CitiesFragmentViewModel.class);
         adapter=new CitiesListAdapter(model.getLiveData().getValue(), this.getContext());
 
     }
-    private void setAdapterList(){
-        adapter.setCitiesList(model.getLiveData().getValue());
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -61,9 +56,7 @@ public class FragmentCitiesList extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         recyclerView=view.findViewById(R.id.listCities);
-
         setAdapterList();
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -112,4 +105,19 @@ public class FragmentCitiesList extends Fragment {
         adapter.setCitiesList(model.getLiveData().getValue());
     }
 
+    private void setAdapterList(){
+        adapter.setCitiesList(model.getLiveData().getValue());
+    }
+
+    @Override
+    public void onCityItemClick(String city) {
+
+        Toast.makeText(getContext(), "Работай, бля!", Toast.LENGTH_LONG).show();
+    }
+
+    /*@Override
+    public void onDestroy() {
+        super.onDestroy();
+        model.deleteAll();
+    }*/
 }

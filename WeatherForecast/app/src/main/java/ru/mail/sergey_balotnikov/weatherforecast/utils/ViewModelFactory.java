@@ -9,9 +9,9 @@ import androidx.lifecycle.ViewModelProvider;
 import ru.mail.sergey_balotnikov.weatherforecast.cities.CitiesFragmentViewModel;
 import ru.mail.sergey_balotnikov.weatherforecast.forecast.ForecastViewModel;
 
-public class ForecastModelFactory extends ViewModelProvider.NewInstanceFactory {
+public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     private Application application;
-    public ForecastModelFactory(Application application) {
+    public ViewModelFactory(Application application) {
         super();
         this.application = application;
     }
