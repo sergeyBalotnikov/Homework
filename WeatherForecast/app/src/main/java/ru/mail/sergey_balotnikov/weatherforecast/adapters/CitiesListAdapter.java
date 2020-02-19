@@ -37,16 +37,11 @@ public class CitiesListAdapter extends RecyclerView.Adapter<CitiesListAdapter.Ci
     @Override
     public void onBindViewHolder(@NonNull CityViewHolder holder, int position) {
         if(cityList!=null){
-            CityEntity current = cityList.get(position);
-            holder.cityItemView.setText(current.getName());
-        } else {
-            holder.cityItemView.setText("No cities. Please add city");
+            holder.cityItemView.setText(cityList.get(position).getName());
         }
-        holder.cityItemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(parent, "Работай, бля!", Toast.LENGTH_LONG).show();
-            }
+        holder.cityItemView.setOnClickListener(view ->{
+            holder.onItemClickListener.onCityItemClick(cityList.get(position).getName());
+            Toast.makeText(parent, "Работай, бля!", Toast.LENGTH_LONG).show();
         });
     }
 
@@ -58,6 +53,10 @@ public class CitiesListAdapter extends RecyclerView.Adapter<CitiesListAdapter.Ci
     public void setCitiesList(List<CityEntity> list){
         cityList=list;
         notifyDataSetChanged();
+    }
+
+    public List<CityEntity> getCitiesList() {
+        return cityList;
     }
 
     public class CityViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

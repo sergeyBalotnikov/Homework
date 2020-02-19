@@ -17,6 +17,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:clickable="true"
         android:background="@drawable/drawable_city_list_shape" />
+    <TextView
+        android:id="@+id/emptyCitiesListMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:text="@string/cities_list_is_empty_please_add_some_city_before"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddCity"

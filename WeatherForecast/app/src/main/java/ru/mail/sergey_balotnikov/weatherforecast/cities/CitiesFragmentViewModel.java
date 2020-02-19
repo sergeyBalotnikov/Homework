@@ -24,8 +24,12 @@ public class CitiesFragmentViewModel extends AndroidViewModel {
     }
 
     public MutableLiveData<List<CityEntity>> getLiveData() {
-        repository.getAllCities().thenAccept(listCities->liveData.postValue(listCities));
+        fetchCitiesList();
         return liveData;
+    }
+
+    void fetchCitiesList(){
+        repository.getAllCities().thenAccept(listCities->liveData.postValue(listCities));
     }
 
     public void addCity(String cityName) {

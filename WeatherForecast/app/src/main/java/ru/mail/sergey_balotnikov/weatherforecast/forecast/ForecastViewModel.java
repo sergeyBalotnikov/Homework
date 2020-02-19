@@ -26,6 +26,7 @@ public class ForecastViewModel extends AndroidViewModel {
     public LiveData<List<Forecast>> getForecastListLiveData() {
         return forecastListLiveData;
     }
+
     void fetchForecastList(){
         repository.getForecastList().thenAcceptAsync(forecasts ->
                 forecastListLiveData.postValue(forecasts), Executors.newSingleThreadExecutor());

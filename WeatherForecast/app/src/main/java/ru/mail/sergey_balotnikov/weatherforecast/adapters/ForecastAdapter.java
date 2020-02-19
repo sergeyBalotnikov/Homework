@@ -41,7 +41,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Whethe
             String time = new SimpleDateFormat("EE 'в' h a")
                     .format(new Date(currentWhether.getTime()*1000));
             holder.time.setText(time);
-            holder.getIconById(currentWhether.getIconId());
+            holder.showIcon(currentWhether.getIconId());
         } else {
             holder.description.setText("city");
         }
@@ -65,7 +65,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Whethe
             temperature = itemView.findViewById(R.id.tvTemperature);
             description = itemView.findViewById(R.id.tvDescription);
         }
-        private void getIconById(String iconId){
+        private void showIcon(String iconId){
             String imageUrl = String.format(Consts.GET_ICON, iconId);
             Picasso.get().load(imageUrl).into(icon);
         }

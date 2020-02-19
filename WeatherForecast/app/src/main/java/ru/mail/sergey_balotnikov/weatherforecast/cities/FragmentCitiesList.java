@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,6 +35,7 @@ public class FragmentCitiesList extends Fragment implements CitiesListAdapter.On
     private FloatingActionButton fabAddCity;
     private CitiesFragmentViewModel model;
     private CitiesListAdapter adapter;
+    private TextView emptyCitiesListMessage;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,6 +66,17 @@ public class FragmentCitiesList extends Fragment implements CitiesListAdapter.On
         fabAddCity.setOnClickListener(fab ->
             showAddCityDialog()
         );
+        emptyCitiesListMessage=view.findViewById(R.id.emptyCitiesListMessage);
+    }
+
+    private void checkCitiesList(){
+        if(adapter.getCitiesList()==null||adapter.getCitiesList().isEmpty()){
+            recyclerView.setVisibility(View.INVISIBLE);
+            emptyCitiesListMessage.setVisibility(View.VISIBLE);
+        } else {
+            recyclerView.setVisibility(View.VISIBLE);
+            emptyCitiesListMessage.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void showAddCityDialog() {
@@ -107,17 +120,19 @@ public class FragmentCitiesList extends Fragment implements CitiesListAdapter.On
 
     private void setAdapterList(){
         adapter.setCitiesList(model.getLiveData().getValue());
+        if(adapter!=null&&emptyCitiesListMessage!=null){
+            checkCitiesList();
+        }
     }
 
     @Override
     public void onCityItemClick(String city) {
-
         Toast.makeText(getContext(), "Работай, бля!", Toast.LENGTH_LONG).show();
     }
 
-    /*@Override
+    @Override
     public void onDestroy() {
         super.onDestroy();
         model.deleteAll();
-    }*/
+    }
 }
