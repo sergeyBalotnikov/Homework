@@ -2,12 +2,13 @@ package ru.mail.sergey_balotnikov.weatherforecast.cities;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import android.widget.Toast;import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -23,7 +24,7 @@ import ru.mail.sergey_balotnikov.weatherforecast.adapters.CitiesListAdapter;
 import ru.mail.sergey_balotnikov.weatherforecast.utils.CheckCityValidInput;
 import ru.mail.sergey_balotnikov.weatherforecast.utils.ViewModelFactory;
 
-public class FragmentCitiesList extends Fragment implements CitiesListAdapter.OnItemClickListener{
+public class FragmentCitiesList extends Fragment {
 
 
     private static final String LOG_TAG = "SVB";
@@ -34,48 +35,46 @@ public class FragmentCitiesList extends Fragment implements CitiesListAdapter.On
     private RecyclerView recyclerView;
     private FloatingActionButton fabAddCity;
     private CitiesFragmentViewModel model;
-    private CitiesListAdapter adapter;
-    private TextView emptyCitiesListMessage;
+    private TextView emptyListMessage;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        model=new ViewModelProvider(this, new ViewModelFactory(
-                getActivity().getApplication()))
-                .get(CitiesFragmentViewModel.class);
-        adapter=new CitiesListAdapter(model.getLiveData().getValue(), this.getContext());
-
+        ViewModelFactory viewModelFactory = new ViewModelFactory(getActivity().getApplication());
+        model=new ViewModelProvider(this, viewModelFactory).get(CitiesFragmentViewModel.class);
     }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        model.getLiveData().observe(getViewLifecycleOwner(), cityEntityList ->
-                FragmentCitiesList.this.setAdapterList());
+        model.getLiveData().observe(getViewLifecycleOwner(), cityEntityList -> setAdapterList());
         return inflater.inflate(R.layout.fragment_list_city, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        model.fetchCitiesList();
+
+        emptyListMessage = view.findViewById(R.id.emptyCitiesListMessage);
+
         recyclerView=view.findViewById(R.id.listCities);
-        setAdapterList();
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(new CitiesListAdapter(
+                (CitiesListAdapter.OnItemClickListener)this.getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+
         fabAddCity=view.findViewById(R.id.fabAddCity);
-        fabAddCity.setOnClickListener(fab ->
-            showAddCityDialog()
-        );
-        emptyCitiesListMessage=view.findViewById(R.id.emptyCitiesListMessage);
+        fabAddCity.setOnClickListener(fab -> showAddCityDialog());
+        model.fetchCitiesList();
     }
 
-    private void checkCitiesList(){
-        if(adapter.getCitiesList()==null||adapter.getCitiesList().isEmpty()){
-            recyclerView.setVisibility(View.INVISIBLE);
-            emptyCitiesListMessage.setVisibility(View.VISIBLE);
+    private boolean isCitiesListEmpty(){
+        if(((CitiesListAdapter)recyclerView.getAdapter()).getCitiesList()==null
+                ||((CitiesListAdapter)recyclerView.getAdapter()).getCitiesList().isEmpty()){
+            return true;
         } else {
-            recyclerView.setVisibility(View.VISIBLE);
-            emptyCitiesListMessage.setVisibility(View.INVISIBLE);
+            return false;
         }
     }
 
@@ -113,26 +112,24 @@ public class FragmentCitiesList extends Fragment implements CitiesListAdapter.On
         alertDialog.show();
     }
 
-    public void addCityToList(String cityName){
+    private void addCityToList(String cityName) {
         model.addCity(cityName);
-        adapter.setCitiesList(model.getLiveData().getValue());
-    }
-
-    private void setAdapterList(){
-        adapter.setCitiesList(model.getLiveData().getValue());
-        if(adapter!=null&&emptyCitiesListMessage!=null){
-            checkCitiesList();
+        Log.d(LOG_TAG, "Add city "+cityName);
+        if (recyclerView.getAdapter() != null) {
+            ((CitiesListAdapter) recyclerView.getAdapter()).addCityToList(cityName);
+            ((CitiesListAdapter) recyclerView.getAdapter()).setCitiesList(model.getLiveData().getValue());
         }
     }
 
-    @Override
-    public void onCityItemClick(String city) {
-        Toast.makeText(getContext(), "Работай, бля!", Toast.LENGTH_LONG).show();
+    private void setAdapterList() {
+        if (recyclerView.getAdapter() != null) {
+            ((CitiesListAdapter) recyclerView.getAdapter()).setCitiesList(model.getLiveData().getValue());
+        }
     }
 
-    @Override
+    /*@Override
     public void onDestroy() {
         super.onDestroy();
         model.deleteAll();
-    }
+    }*/
 }

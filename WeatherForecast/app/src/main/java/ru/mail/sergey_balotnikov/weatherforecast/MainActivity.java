@@ -1,9 +1,11 @@
 package ru.mail.sergey_balotnikov.weatherforecast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.Toast;
+import androidx.fragment.app.Fragment;
 
+import android.content.Context;
+import android.os.Bundle;
+import android.util.Log;
 import ru.mail.sergey_balotnikov.weatherforecast.adapters.CitiesListAdapter;
 import ru.mail.sergey_balotnikov.weatherforecast.cities.FragmentCitiesList;
 import ru.mail.sergey_balotnikov.weatherforecast.forecast.FragmentCityForecast;
@@ -27,17 +29,15 @@ public class MainActivity extends AppCompatActivity implements FragmentCityForec
         getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer,
                 FragmentCitiesList.getInstance(),
                 FragmentCitiesList.class.getSimpleName())
-                .addToBackStack(null)
+                .disallowAddToBackStack()
                 .commit();
     }
 
     @Override
     public void onCityItemClick(String city) {
-        getPreferences(MODE_PRIVATE).edit().putString(Consts.KEY_CITY, city).apply();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainer, FragmentCityForecast.newInstance())
-                .commit();
-        Toast.makeText(this, "Работай, бля!", Toast.LENGTH_LONG).show();
-
+        Log.d("SVB", "preferences edit "+city);
+        this.getPreferences(MODE_PRIVATE).edit().putString(Consts.KEY_CITY, city).apply();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, FragmentCityForecast.newInstance(),
+                FragmentCityForecast.class.getSimpleName()).commit();
     }
 }

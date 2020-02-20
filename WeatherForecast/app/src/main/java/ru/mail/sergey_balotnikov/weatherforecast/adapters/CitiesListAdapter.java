@@ -1,29 +1,28 @@
 package ru.mail.sergey_balotnikov.weatherforecast.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import ru.mail.sergey_balotnikov.weatherforecast.R;
 import ru.mail.sergey_balotnikov.weatherforecast.repositories.database.CityEntity;
 
 public class CitiesListAdapter extends RecyclerView.Adapter<CitiesListAdapter.CityViewHolder> {
 
-    private List<CityEntity> cityList;
+    private List<CityEntity> cityList = Collections.emptyList();
     private OnItemClickListener onItemClickListener;
-    private Context parent;
 
-    public CitiesListAdapter(List<CityEntity> list, Context parent) {
-        cityList=list;
-        if(parent instanceof OnItemClickListener){
-            onItemClickListener=(OnItemClickListener)parent;
-        }
-        this.parent = parent;
+    public CitiesListAdapter(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull
@@ -31,18 +30,12 @@ public class CitiesListAdapter extends RecyclerView.Adapter<CitiesListAdapter.Ci
     public CityViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_cities_list, parent, false);
-        return new CityViewHolder(itemView, onItemClickListener);
+        return new CityViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CityViewHolder holder, int position) {
-        if(cityList!=null){
-            holder.cityItemView.setText(cityList.get(position).getName());
-        }
-        holder.cityItemView.setOnClickListener(view ->{
-            holder.onItemClickListener.onCityItemClick(cityList.get(position).getName());
-            Toast.makeText(parent, "Работай, бля!", Toast.LENGTH_LONG).show();
-        });
+        holder.bind(cityList.get(position));
     }
 
     @Override
@@ -52,32 +45,38 @@ public class CitiesListAdapter extends RecyclerView.Adapter<CitiesListAdapter.Ci
 
     public void setCitiesList(List<CityEntity> list){
         cityList=list;
+        Log.d("SVB", "CitiesListAdapter#setCitiesList" + list.size());
         notifyDataSetChanged();
+    }
+    public void addCityToList(String city){
+        CityEntity cityEntity = new CityEntity();
+        cityEntity.setName(city);
+        ArrayList<CityEntity> cityEntities = (ArrayList<CityEntity>) cityList;
+        cityEntities.add(cityEntity);
+        setCitiesList(cityEntities);
     }
 
     public List<CityEntity> getCitiesList() {
         return cityList;
     }
 
-    public class CityViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class CityViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView cityItemView;
-        private OnItemClickListener onItemClickListener;
 
-        CityViewHolder(@NonNull View itemView, OnItemClickListener listener) {
+        CityViewHolder(@NonNull View itemView) {
             super(itemView);
             cityItemView=itemView.findViewById(R.id.itemCityNameText);
-            onItemClickListener = listener;
-            itemView.setOnClickListener(this);
         }
-
-        @Override
-        public void onClick(View view) {
-            if(onItemClickListener!=null){
-                Toast.makeText(parent, "Работай, бля!", Toast.LENGTH_LONG).show();
-            } else{
-                Toast.makeText(parent, "Работай, бля!", Toast.LENGTH_LONG).show();
-            }
+        private void bind(final CityEntity cityEntity) {
+            cityItemView.setText(cityEntity.getName());
+            Log.d("CitiesListAdapter", "CitiesListAdapter#bind");
+            itemView.setOnClickListener(view -> {
+                Log.d("CitiesListAdapter", "CitiesListAdapter#Click");
+                if (onItemClickListener != null) {
+                    onItemClickListener.onCityItemClick(cityEntity.getName());
+                }
+            });
         }
     }
     public interface OnItemClickListener{

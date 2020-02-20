@@ -46,6 +46,7 @@ public class FragmentCityForecast extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        Log.d(LOG_TAG, "CityForecastAttach");
         if(context instanceof CitiesListListener){
             listListener=(CitiesListListener)context;
         }
@@ -53,6 +54,7 @@ public class FragmentCityForecast extends Fragment {
                 getActivity().getApplication()))
                 .get(ForecastViewModel.class);
         sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+        Log.d(LOG_TAG, sharedPreferences.getString(Consts.KEY_CITY, "Minsk"));
         city = sharedPreferences.getString(Consts.KEY_CITY, "Minsk");
         isCelsius = sharedPreferences.getBoolean(Consts.KEY_UNITS, false);
     }

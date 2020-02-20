@@ -24,7 +24,6 @@ public class CitiesFragmentViewModel extends AndroidViewModel {
     }
 
     public MutableLiveData<List<CityEntity>> getLiveData() {
-        fetchCitiesList();
         return liveData;
     }
 

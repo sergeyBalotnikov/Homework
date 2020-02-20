@@ -26,6 +26,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:gravity="center"
+        android:visibility="invisible"
         android:textColor="@android:color/black"
         android:text="@string/cities_list_is_empty_please_add_some_city_before"/>
 
