@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-
 import android.widget.Toast;import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -55,7 +54,6 @@ public class FragmentCitiesList extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        model.fetchCitiesList();
 
         emptyListMessage = view.findViewById(R.id.emptyCitiesListMessage);
 
@@ -67,15 +65,6 @@ public class FragmentCitiesList extends Fragment {
         fabAddCity=view.findViewById(R.id.fabAddCity);
         fabAddCity.setOnClickListener(fab -> showAddCityDialog());
         model.fetchCitiesList();
-    }
-
-    private boolean isCitiesListEmpty(){
-        if(((CitiesListAdapter)recyclerView.getAdapter()).getCitiesList()==null
-                ||((CitiesListAdapter)recyclerView.getAdapter()).getCitiesList().isEmpty()){
-            return true;
-        } else {
-            return false;
-        }
     }
 
     private void showAddCityDialog() {
@@ -101,7 +90,6 @@ public class FragmentCitiesList extends Fragment {
             }
             if(isCityValid){
                 addCityToList(enteredCity);
-                Toast.makeText(getContext(), "City is valid", Toast.LENGTH_LONG).show();
             } else{
                 Toast.makeText(getContext(), "City is not valid", Toast.LENGTH_LONG).show();
 
@@ -119,17 +107,17 @@ public class FragmentCitiesList extends Fragment {
             ((CitiesListAdapter) recyclerView.getAdapter()).addCityToList(cityName);
             ((CitiesListAdapter) recyclerView.getAdapter()).setCitiesList(model.getLiveData().getValue());
         }
+        setAdapterList();
     }
 
     private void setAdapterList() {
         if (recyclerView.getAdapter() != null) {
             ((CitiesListAdapter) recyclerView.getAdapter()).setCitiesList(model.getLiveData().getValue());
+            if(recyclerView.getAdapter().getItemCount()==0){
+                emptyListMessage.setVisibility(View.VISIBLE);
+            } else {
+                emptyListMessage.setVisibility(View.INVISIBLE);
+            }
         }
     }
-
-    /*@Override
-    public void onDestroy() {
-        super.onDestroy();
-        model.deleteAll();
-    }*/
 }

@@ -1,9 +1,6 @@
 package ru.mail.sergey_balotnikov.weatherforecast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import ru.mail.sergey_balotnikov.weatherforecast.adapters.CitiesListAdapter;
@@ -38,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements FragmentCityForec
         Log.d("SVB", "preferences edit "+city);
         this.getPreferences(MODE_PRIVATE).edit().putString(Consts.KEY_CITY, city).apply();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, FragmentCityForecast.newInstance(),
-                FragmentCityForecast.class.getSimpleName()).commit();
+                FragmentCityForecast.class.getSimpleName())
+                .commit();
     }
 }
