@@ -9,4 +9,5 @@ public class Consts {
     public static final String ACTION_STOP = "actionStop";
     public static final String BROADCAST_ACTION = "broadcastAction";
     public static final String KEY_ACTION = "keyAction";
+    public static final String MEDIA_SESSION_TAG = "MStag";
 }
