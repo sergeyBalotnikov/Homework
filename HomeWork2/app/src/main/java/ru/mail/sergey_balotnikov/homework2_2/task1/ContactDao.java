@@ -26,6 +26,11 @@ public interface ContactDao {
     @Delete
     void delete(Contact contact);
 
+    @Query("SELECT * FROM CONTACT_TABLE")
+    Cursor getAllContacts();
+
+    @Query("DELETE FROM CONTACT_TABLE WHERE _id=:id")
+    int deleteById(long id);
     /*@Query("DELETE FROM contact_table")
     void deleteAll();
 

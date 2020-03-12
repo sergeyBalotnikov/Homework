@@ -23,5 +23,10 @@
     <string name="home_page">google.com</string>
     <string name="previous_page">previous page</string>
     <string name="open_in_browser">open in browser</string>
+    <string name="alarm_message">Are you sure you want to open the page in a third-party browser?</string>
+    <string name="alarm">Alarm</string>
+    <string name="cancel">cancel</string>
+    <string name="yes">Yes</string>
+    <string name="home_page_uri">https://google.com</string>
 
 </resources>
