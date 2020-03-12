@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:background="@color/colorPrimary"
+        android:elevation="10dp"
+        >
+
+        <ImageButton
+            android:id="@+id/ib_edit_back"
+            android:background="@drawable/ic_arrow_back_white_24dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="@dimen/dimenLargeMargin"/>
+        <TextView
+            android:id="@+id/tv_edit_contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_contact"
+            android:textStyle="bold"
+            android:textSize="@dimen/titleTextSize"
+            android:textColor="@color/colorBackGround"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <EditText
+        android:id="@+id/et_name"
+        android:layout_width="328dp"
+        android:layout_height="67dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="80dp"
+        />
+
+    <EditText
+
+        android:id="@+id/et_mail"
+        android:layout_width="328dp"
+        android:layout_height="67dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="147dp"/>
+
+    <Button
+        android:id="@+id/btn_remove"
+        style="@style/ButtonRemove"
+        android:layout_width="281dp"
+        android:layout_height="58dp"
+        android:text="@string/remove"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="56dp"/>
+
+
+</RelativeLayout>

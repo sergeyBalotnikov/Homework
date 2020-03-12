@@ -10,9 +10,6 @@ import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    private int orientation;
-    private int screenSize=0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
             screenSize = configuration.screenHeightDp;
         }
         setBackgroundImage(configuration.orientation);
+    }
+    public void onConfigurationChanged(Configuration configuration) {
+        super.onConfigurationChanged(configuration);
+        this.setContentView(R.layout.activity_main);
     }
 
 }

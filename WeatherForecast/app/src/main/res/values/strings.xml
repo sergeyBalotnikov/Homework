@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">WeatherForecast</string>
+    <string name="done">Done</string>
+    <string name="enter_city_name">Введите название города</string>
+    <string name="cities_list_is_empty_please_add_some_city_before">Cities list is empty. Please add some city before</string>
+
+</resources>
