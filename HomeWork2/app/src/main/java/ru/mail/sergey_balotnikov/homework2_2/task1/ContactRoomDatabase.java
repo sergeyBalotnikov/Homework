@@ -19,7 +19,7 @@ public abstract class ContactRoomDatabase extends RoomDatabase {
     static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    static ContactRoomDatabase getDatabase(final Context context){
+    public static ContactRoomDatabase getDatabase(final Context context){
         if(INSTANCE==null){
             synchronized (ContactRoomDatabase.class){
                 if(INSTANCE ==null){
